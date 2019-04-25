@@ -6,4 +6,4 @@ module Luhn
 import Luhn.Internal
 
 validate :: Integer -> Bool
-validate = undefined
+validate = (== 0) . (`mod` 10) . sumDigits . doubleEveryOther . toDigits

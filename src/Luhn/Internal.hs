@@ -2,14 +2,32 @@ module Luhn.Internal
   ( toDigits
   , doubleEveryOther
   , sumDigits
+  , fromDigits
   )
   where
 
 toDigits :: Integer -> [Integer]
-toDigits = undefined
+toDigits = go []
+  where go digits n
+          | n <= 0    = digits
+          | otherwise = go (m:digits) d
+            where (d,m) = divMod n 10
 
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = undefined
+doubleEveryOther = reverse.single.reverse
+  where
+    single [] = []
+    single (d:ds) = d:(double ds)
+    double [] = []
+    double (d:ds) = (2 * d):(single ds)
 
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
+sumDigits = sum.flattenDigits
+  where
+    flattenDigits [] = []
+    flattenDigits (n:ns) = (toDigits n) ++ (flattenDigits ns)
+
+fromDigits :: [Integer] -> Integer
+fromDigits [] = 0
+fromDigits [digit] = digit
+fromDigits (digit:digits) = digit * 10 + (fromDigits digits)

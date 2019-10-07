@@ -28,6 +28,4 @@ sumDigits = sum.flattenDigits
     flattenDigits (n:ns) = (toDigits n) ++ (flattenDigits ns)
 
 fromDigits :: [Integer] -> Integer
-fromDigits [] = 0
-fromDigits [digit] = digit
-fromDigits (digit:digits) = digit * 10 + (fromDigits digits)
+fromDigits = sum . zipWith (*) [10 ^ i | i <- [0..]] . reverse

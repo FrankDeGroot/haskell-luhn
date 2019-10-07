@@ -35,6 +35,12 @@ spec = do
     it "holds on: x == fromDigits(toDigits x)" $ do
       property $ \x -> x >= 0 ==> x == (fromDigits . toDigits) x
 
+  describe "fromDigits" $ do
+    it "convert a list of digits to an integer" $ do
+      fromDigits [] `shouldBe` 0
+      fromDigits [1] `shouldBe` 1
+      fromDigits [1,2,3] `shouldBe` 123
+
   describe "validate" $ do
     it "returns True if number is valid, False otherwise" $ do
       1234567889 `shouldSatisfy` validate
